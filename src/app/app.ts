@@ -35,8 +35,10 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
 
   protected readonly isMenuOpen = signal(false);
   protected readonly scrollY = signal(0);
+  protected readonly isVideoLoading = signal(true);
 
   private intervalId: ReturnType<typeof setInterval> | null = null;
+  private videoBufferCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   @ViewChildren('animateOnScroll') animateElements!: QueryList<ElementRef>;
 
@@ -49,37 +51,79 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setupScrollAnimations();
-    this.forcePlayHeroVideo();
+    this.initVideoBuffering();
   }
 
-  private forcePlayHeroVideo(): void {
-    // Attempt to force play the video after a short delay
-    setTimeout(() => {
-      const video = document.getElementById('hero-promo-video') as HTMLVideoElement;
-      if (video) {
-        video.muted = true; // Ensure it's muted to allow autoplay
-        const playPromise = video.play();
+  private initVideoBuffering(): void {
+    const video = document.getElementById('hero-promo-video') as HTMLVideoElement;
+    if (!video) return;
+
+    video.muted = true;
+    video.preload = 'auto';
+
+    // Required buffer time in seconds (e.g., 5-7 seconds as requested)
+    const REQUIRED_BUFFER_SECONDS = 6;
+
+    const checkBuffer = () => {
+      if (video.buffered.length > 0) {
+        const bufferedEnd = video.buffered.end(0);
+        const duration = video.duration;
         
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.warn("Hero video autoplay failed. User interaction might be required.", error);
-            // Retry on first user interaction if blocked
-            const retryPlay = () => {
-              video.play();
-              window.removeEventListener('click', retryPlay);
-              window.removeEventListener('touchstart', retryPlay);
-            };
-            window.addEventListener('click', retryPlay);
-            window.addEventListener('touchstart', retryPlay);
-          });
+        // If we've buffered enough or reached the end of the video
+        if (bufferedEnd >= REQUIRED_BUFFER_SECONDS || (duration > 0 && bufferedEnd >= duration)) {
+          this.startVideo(video);
         }
       }
-    }, 1000);
+    };
+
+    // Add listeners for various states
+    video.addEventListener('canplaythrough', () => {
+      // Browsers think it can play through, but let's still ensure we have our required buffer
+      checkBuffer();
+    });
+
+    // Check progress periodically
+    this.videoBufferCheckInterval = setInterval(checkBuffer, 500);
+
+    // Fallback: if it takes too long (e.g. 15 seconds), just start it anyway
+    setTimeout(() => {
+      if (this.isVideoLoading()) {
+        this.startVideo(video);
+      }
+    }, 15000);
+  }
+
+  private startVideo(video: HTMLVideoElement): void {
+    if (this.videoBufferCheckInterval) {
+      clearInterval(this.videoBufferCheckInterval);
+      this.videoBufferCheckInterval = null;
+    }
+
+    if (!this.isVideoLoading()) return;
+
+    this.isVideoLoading.set(false);
+    
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.warn("Hero video playback failed. User interaction might be required.", error);
+        const retryPlay = () => {
+          video.play();
+          window.removeEventListener('click', retryPlay);
+          window.removeEventListener('touchstart', retryPlay);
+        };
+        window.addEventListener('click', retryPlay);
+        window.addEventListener('touchstart', retryPlay);
+      });
+    }
   }
 
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
+    }
+    if (this.videoBufferCheckInterval) {
+      clearInterval(this.videoBufferCheckInterval);
     }
     if (this.observer) {
       this.observer.disconnect();

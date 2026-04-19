@@ -61,17 +61,25 @@
      ============================================ -->
 <section id="hero" class="hero-section hero-video-section">
   <div class="hero-video-wrapper">
+    <!-- Video Loading Overlay -->
+    @if (isVideoLoading()) {
+    <div class="video-loader-overlay">
+      <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <span class="loader-text">Loading Cinematic Experience...</span>
+      </div>
+    </div>
+    }
+
     <!-- Video background element -->
     <video
       class="hero-video"
-      autoplay
       muted
       loop
       playsinline
       preload="auto"
-      id="hero-promo-video"
-      #heroVideo
-      (canplay)="heroVideo.play()">
+      poster="post.jpeg"
+      id="hero-promo-video">
       <source src="Farmers.mp4" type="video/mp4" />
     </video>
 
