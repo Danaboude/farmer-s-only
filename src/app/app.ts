@@ -49,6 +49,32 @@ export class App implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setupScrollAnimations();
+    this.forcePlayHeroVideo();
+  }
+
+  private forcePlayHeroVideo(): void {
+    // Attempt to force play the video after a short delay
+    setTimeout(() => {
+      const video = document.getElementById('hero-promo-video') as HTMLVideoElement;
+      if (video) {
+        video.muted = true; // Ensure it's muted to allow autoplay
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.warn("Hero video autoplay failed. User interaction might be required.", error);
+            // Retry on first user interaction if blocked
+            const retryPlay = () => {
+              video.play();
+              window.removeEventListener('click', retryPlay);
+              window.removeEventListener('touchstart', retryPlay);
+            };
+            window.addEventListener('click', retryPlay);
+            window.addEventListener('touchstart', retryPlay);
+          });
+        }
+      }
+    }, 1000);
   }
 
   ngOnDestroy(): void {

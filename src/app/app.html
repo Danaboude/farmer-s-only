@@ -57,72 +57,34 @@
 </nav>
 
 <!-- ============================================
-     HERO SECTION
+     HERO SECTION — CINEMATIC VIDEO
      ============================================ -->
-<section id="hero" class="hero-section">
-  <div class="hero-bg-overlay"></div>
-  <div class="hero-gradient-overlay"></div>
+<section id="hero" class="hero-section hero-video-section">
+  <div class="hero-video-wrapper">
+    <!-- Video background element -->
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      id="hero-promo-video"
+      #heroVideo
+      (canplay)="heroVideo.play()">
+      <source src="Farmers.mp4" type="video/mp4" />
+    </video>
 
-  <div class="hero-content">
-    <div class="hero-badge" #animateOnScroll>
-      <span class="badge-dot"></span>
-      <span>Antigua's #1 Barnyard Party</span>
-    </div>
-
-    <div class="hero-logo-wrapper" #animateOnScroll>
-      <div class="logo-frame">
-        <img src="logo.png" alt="Farmer's Only - Gold Rush. The Evolution" class="hero-logo" />
+    <!-- Bottom gradient fade -->
+    <div class="video-bottom-fade"></div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-mouse">
+        <div class="scroll-dot"></div>
       </div>
     </div>
-
-    <h1 class="hero-title" #animateOnScroll>
-      <span class="hero-title-line">The Ultimate</span>
-      <span class="hero-title-gold">All-Inclusive</span>
-      <span class="hero-title-line">Barnyard Party</span>
-    </h1>
-
-    <p class="hero-subtitle" #animateOnScroll>
-      Gold Rush. The Evolution — An unforgettable day of food, drinks, music & vibes at Green Bay, Antigua
-    </p>
-
-    <div class="hero-date-badge" #animateOnScroll>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" />
-        <line x1="16" y1="2" x2="16" y2="6" />
-        <line x1="8" y1="2" x2="8" y2="6" />
-        <line x1="3" y1="10" x2="21" y2="10" />
-      </svg>
-      <span>Sunday, May 24th, 2026</span>
-      <span class="date-divider">|</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-        <circle cx="12" cy="10" r="3" />
-      </svg>
-      <span>Green Bay, Antigua</span>
-    </div>
-
-    <div class="hero-actions" #animateOnScroll>
-      <a href="https://www.facebook.com/FarmersOnlyTheBarnyardParty/" target="_blank" rel="noopener" class="btn-primary"
-        id="hero-tickets-btn">
-        <span>Get Your Tickets</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </a>
-      <a href="#countdown" class="btn-secondary" id="hero-countdown-btn">
-        <span>View Countdown</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </a>
-    </div>
   </div>
-
-
 </section>
 
 <!-- ============================================
@@ -269,7 +231,11 @@
       <!-- All-Inclusive Food -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2-2.96 0-7-1-8 0 3.038-1.773 4.741-3 6-1.226 1.26-2 3.24-2 5a6 6 0 1 0 12 0c0-1.532-1.056-3.94-2-5-1.786 3-2.791 3-4 2z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M12 12c2-2.96 0-7-1-8 0 3.038-1.773 4.741-3 6-1.226 1.26-2 3.24-2 5a6 6 0 1 0 12 0c0-1.532-1.056-3.94-2-5-1.786 3-2.791 3-4 2z" />
+          </svg>
         </div>
         <h3 class="feature-title">All-Inclusive Food</h3>
         <p class="feature-desc">Premium BBQ, local delicacies & gourmet bites</p>
@@ -279,7 +245,14 @@
       <!-- Unlimited Drinks -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8h14z"/><path d="M5 3l2.5 2.5"/><circle cx="9" cy="6" r="1"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 22h8" />
+            <path d="M12 11v11" />
+            <path d="m19 3-7 8-7-8h14z" />
+            <path d="M5 3l2.5 2.5" />
+            <circle cx="9" cy="6" r="1" />
+          </svg>
         </div>
         <h3 class="feature-title">Unlimited Drinks</h3>
         <p class="feature-desc">Open bar with craft cocktails & premium spirits</p>
@@ -289,7 +262,12 @@
       <!-- Live Entertainment -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+          </svg>
         </div>
         <h3 class="feature-title">Live Entertainment</h3>
         <p class="feature-desc">Top DJs & live performances all day long</p>
@@ -299,7 +277,11 @@
       <!-- Activities & Games -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
         </div>
         <h3 class="feature-title">Activities & Games</h3>
         <p class="feature-desc">Spin & Win, giveaways, and partner prizes</p>
@@ -309,7 +291,13 @@
       <!-- Denim & Cowboy Theme -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><path d="M3 16l-2 4h22l-2-4"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/><line x1="4" y1="13" x2="20" y2="13"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" />
+            <path d="M3 16l-2 4h22l-2-4" />
+            <path d="M7 10V7a5 5 0 0 1 10 0v3" />
+            <line x1="4" y1="13" x2="20" y2="13" />
+          </svg>
         </div>
         <h3 class="feature-title">Denim & Cowboy Theme</h3>
         <p class="feature-desc">Dress code: Denim, boots & cowboy hats!</p>
@@ -319,7 +307,11 @@
       <!-- Photo Moments -->
       <div class="feature-card">
         <div class="feature-icon-svg">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+            <circle cx="12" cy="13" r="4" />
+          </svg>
         </div>
         <h3 class="feature-title">Photo Moments</h3>
         <p class="feature-desc">Capture memories at our premium photo booths</p>
